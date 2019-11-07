@@ -8,42 +8,47 @@ pipeline {
     }
 
     stages {
-        stage('Style Analysis') {
-            steps {
-                checkout scm
-                echo 'Running linters..'
-                timeout(time: 5, unit: 'MINUTES') {
-                    sh 'tox -e lint'
-                    echo 'Parsing pep8 logs..'
-                    step([$class: 'WarningsPublisher',
-                        parserConfigurations: [[
-                            parserName: 'Pep8', pattern: '.tox/pep8/log/*.log'
-                        ]], unstableTotalAll: '0', usePreviousBuildAsReference: true
-                    ])
-                }
-            }
-        }
+        //stage('Style Analysis') {
+        //    steps {
+        //        checkout scm
+        //        echo 'Running linters..'
+        //        timeout(time: 5, unit: 'MINUTES') {
+        //            sh 'tox -e lint'
+        //            echo 'Parsing pep8 logs..'
+        //            step([$class: 'WarningsPublisher',
+        //                parserConfigurations: [[
+        //                    parserName: 'Pep8', pattern: '.tox/pep8/log/*.log'
+        //                ]], unstableTotalAll: '0', usePreviousBuildAsReference: true
+        //            ])
+        //        }
+        //    }
+        //}
 
         stage('Unit tests') {
             steps {
                 checkout scm
-                echo 'Computing unit testing coverage..'
-                sh 'tox -e cover'
 
-                echo 'Generating Cobertura report..'
-                sh 'tox -e cobertura'
-                cobertura autoUpdateHealth: false,
-                          autoUpdateStability: false,
-                          coberturaReportFile: '**/coverage.xml',
-                          conditionalCoverageTargets: '70, 0, 0',
-                          failUnhealthy: false,
-                          failUnstable: false,
-                          lineCoverageTargets: '80, 0, 0',
-                          maxNumberOfBuilds: 0,
-                          methodCoverageTargets: '80, 0, 0',
-                          onlyStable: false,
-                          sourceEncoding: 'ASCII',
-                          zoomCoverageChart: false
+		sh 'whoami'
+		sh 'pwd'
+		sh 'id'
+		
+                //echo 'Computing unit testing coverage..'
+                //sh 'tox -e cover'
+
+                //echo 'Generating Cobertura report..'
+                //sh 'tox -e cobertura'
+                //cobertura autoUpdateHealth: false,
+                //          autoUpdateStability: false,
+                //          coberturaReportFile: '**/coverage.xml',
+                //          conditionalCoverageTargets: '70, 0, 0',
+                //          failUnhealthy: false,
+                //          failUnstable: false,
+                //          lineCoverageTargets: '80, 0, 0',
+                //          maxNumberOfBuilds: 0,
+                //          methodCoverageTargets: '80, 0, 0',
+                //          onlyStable: false,
+                //          sourceEncoding: 'ASCII',
+                //          zoomCoverageChart: false
             }
         }
 

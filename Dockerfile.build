@@ -6,6 +6,8 @@ RUN apt-get update \
                                                   python-tox \
     && rm -rf /var/lib/apt/lists/*
 
+USER jenkins
+
 # Standard SSH port
 EXPOSE 22
 
